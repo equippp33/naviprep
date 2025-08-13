@@ -1,20 +1,20 @@
 'use client';
 
 import React from "react";
-import { TrendingUp, CheckSquare,  Grid3x3, Settings, Bell, LogOutIcon } from "lucide-react";
+import { TrendingUp, CheckSquare, Grid3x3, Settings, Bell, LogOutIcon, type LucideIcon} from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 type MenuItem = {
   id: string;
   label: string;
-  icon: React.ComponentType<any>;
+  icon: LucideIcon; // Use LucideIcon instead of React.ComponentType<any>
   route: string;
 };
 
 type Setting = {
   id: string;
   label: string;
-  icon: React.ComponentType<any>;
+  icon: LucideIcon; // Use LucideIcon instead of React.ComponentType<any>
   route: string;
 };
 
@@ -29,9 +29,9 @@ const menuItems: MenuItem[] = [
   { id: "stats", label: "My Stats", icon: CheckSquare, route: "/dashboard/mystats" },
 ];
 
-const setting:Setting[]=[
-  {id:"account",label: "Account Settings", icon: Settings, route: "/dashboard/accountsettings"},
-  {id:"notification",label: "Notification preferences", icon: Bell, route: "/dashboard/notificationpreferences"},
+const setting: Setting[] = [
+  { id: "account", label: "Account Settings", icon: Settings, route: "/dashboard/accountsettings" },
+  { id: "notification", label: "Notification preferences", icon: Bell, route: "/dashboard/notificationpreferences" },
 ];
 
 const Sidebar: React.FC = () => {
@@ -39,13 +39,11 @@ const Sidebar: React.FC = () => {
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen w-64 flex-col bg-gray-900  text-white">
-      <div className=" w-45">
-          <img src="/navipreplogo.svg" alt="" className="" />
-        </div>
+    <div className="flex min-h-screen w-64 flex-col bg-gray-900 text-white">
+      <div className="w-45">
+        <img src="/navipreplogo.svg" alt="" className="" />
+      </div>
       <div className="border-b border-gray-500 p-3">
-        {/* ...logo area... */}
-        
         <div className="mb-8">
           <h3 className="mb-4 text-sm font-medium text-gray-400">Main menu</h3>
           <nav className="space-y-2">
@@ -71,7 +69,7 @@ const Sidebar: React.FC = () => {
         </div>
       </div>
       <div className="border-b border-gray-500 p-3">
-            <div className="my-8">
+        <div className="my-8">
           <h3 className="mb-4 text-sm font-medium text-gray-400">Settings</h3>
           <nav className="space-y-2">
             {setting.map((item) => {
@@ -97,11 +95,8 @@ const Sidebar: React.FC = () => {
       </div>
       <div className="flex items-center p-3 gap-3">
         <LogOutIcon />
-        <p>
-          Logout
-        </p>
+        <p>Logout</p>
       </div>
-      {/* ...rest unchanged... */}
     </div>
   );
 };

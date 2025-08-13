@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Sidebar from "../../_components/Dashboard/Sidebar";
 import Interviewgrid from "../../_components/interviews/Interviewgrid";
 
-const page = () => {
+const Page = () => {
   const [activeMenuItem, setActiveMenuItem] = useState("dashboard");
   return (
     <div>
@@ -20,4 +20,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

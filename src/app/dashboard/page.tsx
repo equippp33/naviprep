@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Sidebar from "../_components/Dashboard/Sidebar";
 import Dashboard from "../_components/Dashboard/Dashboard";
 
-const page = () => {
+const Page = () => {
   const [activeMenuItem, setActiveMenuItem] = useState("dashboard");
   return (
     <div>
@@ -18,4 +18,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

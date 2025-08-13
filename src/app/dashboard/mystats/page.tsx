@@ -6,7 +6,7 @@ import UserProfile from "../../_components/Dashboard/UserProfile";
 import Header from "../../_components/stats/Header";
 import Cards from "../../_components/stats/Cards";
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <div className="flex min-h-screen bg-gray-50">
@@ -24,4 +24,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -5,7 +5,7 @@ import Sidebar from "../../_components/Dashboard/Sidebar";
 import NotificationPreferences from "~/app/_components/notificationpreferences/NotificationPreferences";
 import NotificationHeader from "~/app/_components/notificationpreferences/NotificationHeader";
 
-const page = () => {
+const Page = () => {
   const [activeMenuItem, setActiveMenuItem] = useState("dashboard");
   return (
     <div>
@@ -22,4 +22,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

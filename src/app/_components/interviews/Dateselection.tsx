@@ -1,10 +1,17 @@
-import React, { useState, forwardRef } from "react";
+'use client';
+
+import React, { useState, forwardRef, type MouseEvent } from "react";
 import DatePicker from "react-datepicker";
-import { Calendar } from "lucide-react";
+import { Calendar} from "lucide-react";
 import "react-datepicker/dist/react-datepicker.css";
 
+// Define the props type for CustomInput
+interface CustomInputProps {
+  value?: string;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+}
 // Custom input for react-datepicker to match your button style
-const CustomInput = forwardRef<HTMLButtonElement, any>(
+const CustomInput = forwardRef<HTMLButtonElement, CustomInputProps>(
   ({ value, onClick }, ref) => (
     <button
       type="button"
@@ -20,14 +27,17 @@ const CustomInput = forwardRef<HTMLButtonElement, any>(
   )
 );
 
-export default function Dateselection() {
+// Set displayName for the component
+CustomInput.displayName = "CustomInput";
+
+export default function DateSelection() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   return (
     <div>
       <DatePicker
         selected={selectedDate}
-        onChange={date => setSelectedDate(date)}
+        onChange={(date: Date | null) => setSelectedDate(date)}
         customInput={<CustomInput />}
         dateFormat="MM/dd/yyyy"
       />
