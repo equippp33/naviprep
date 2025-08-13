@@ -3,18 +3,35 @@
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { toast } from "~/hooks/use-toast";
+import { api } from "~/trpc/react";
 
-function SignUp() {
+
+interface SignUpFormValues {
+  name: string;
+  collegeName: string;
+  email: string;
+  course: string;
+  location: string;
+  mobileNumber: string;
+  password: string;
+}
+
+export default function SignUp() {
+  
   const [selectedCourse, setSelectedCourse] = useState("");
-  const [collegeName, setCollegeName] = useState("");
-  const [FullName, setFullName] = useState("");
-  const [EmailAddress, setEmailAddress] = useState("");
-  const [location, setLocation] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const router = useRouter(); // Use this instead of useNavigate
+
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<SignUpFormValues>();
 
   const courses = [
     "Computer Science Engineering",
@@ -27,10 +44,28 @@ function SignUp() {
     "Aerospace Engineering",
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // You can add your actual sign-up logic here
-    router.push("/profile-select");
+  
+
+  const { mutate } = api.user.registerUser.useMutation({
+    onSuccess: () => {
+      alert("Account Created");
+      router.push("/login");
+    },
+    onError: (error) => {
+      toast({
+        description: error.message,
+      });
+    },
+  });
+
+  const onSubmit = (data: SignUpFormValues) => {
+    console.log("Form submitted with data:", data);
+    console.log("Selected course:", selectedCourse);
+    console.log("All form data:", {
+      ...data,
+      course: data.course || selectedCourse
+    });
+    mutate(data);
   };
 
   return (
@@ -67,7 +102,7 @@ function SignUp() {
           <h2 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
             Enter your details
           </h2>
-          <form className="space-y-5" onSubmit={handleSubmit}>
+          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
             {/* Course dropdown */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -92,6 +127,7 @@ function SignUp() {
                         className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                         onClick={() => {
                           setSelectedCourse(course);
+                          setValue("course", course);
                           setIsDropdownOpen(false);
                         }}
                       >
@@ -110,9 +146,9 @@ function SignUp() {
               </label>
               <input
                 type="text"
+                {...register("collegeName", { required: true })}
                 placeholder="Enter here"
-                value={collegeName}
-                onChange={(e) => setCollegeName(e.target.value)}
+                // onChange={(e) => setCollegeName(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg"
                 required
               />
@@ -123,9 +159,10 @@ function SignUp() {
               </label>
               <input
                 type="text"
+                {...register("name", { required: true })}
                 placeholder="Enter here"
-                value={FullName}
-                onChange={(e) => setFullName(e.target.value)}
+                
+                // onChange={(e) => setFullName(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg"
                 required
               />
@@ -137,9 +174,10 @@ function SignUp() {
               </label>
               <input
                 type="text"
+                {...register("email", { required: true })}
                 placeholder="Enter here"
-                value={EmailAddress}
-                onChange={(e) => setEmailAddress(e.target.value)}
+                
+                // onChange={(e) => setEmailAddress(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg"
                 required
               />
@@ -152,9 +190,10 @@ function SignUp() {
               </label>
               <input
                 type="text"
+                {...register("location", { required: true })}
                 placeholder="Enter here"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                
+                // onChange={(e) => setLocation(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg"
                 required
               />
@@ -167,9 +206,24 @@ function SignUp() {
               </label>
               <input
                 type="tel"
+                {...register("mobileNumber", { required: true })}
                 placeholder="Enter here"
-                value={mobileNumber}
-                onChange={(e) => setMobileNumber(e.target.value)}
+                
+                // onChange={(e) => setMobileNumber(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+                required
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                {...register("password", { required: true })}
+                placeholder="Enter your password"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg"
                 required
               />
@@ -199,5 +253,3 @@ function SignUp() {
     </div>
   );
 }
-
-export default SignUp;

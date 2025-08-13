@@ -11,6 +11,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
+import { uncachedValidateRequest } from "../validrequest";
 
 /**
  * 1. CONTEXT
@@ -25,12 +26,17 @@ import { db } from "~/server/db";
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
+  const{ session , user} = await uncachedValidateRequest();
+
+  const host = opts.headers.get("host")
   return {
     db,
+    session,
+    user,
+    host,
     ...opts,
   };
 };
-
 /**
  * 2. INITIALIZATION
  *
@@ -104,3 +110,17 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+ 
+  if (!ctx.session || !ctx.user) {
+    throw new Error("Unauthorized");
+  }
+
+  return next({
+    ctx: {
+      session: { ...ctx.session },
+      user: { ...ctx.user },
+    },
+  });
+});

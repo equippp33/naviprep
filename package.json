@@ -20,14 +20,19 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@lucia-auth/adapter-drizzle": "^1.1.0",
+    "@node-rs/argon2": "^2.0.2",
+    "@radix-ui/react-toast": "^1.2.14",
     "@t3-oss/env-nextjs": "^0.12.0",
     "@tanstack/react-query": "^5.69.0",
     "@trpc/client": "^11.0.0",
     "@trpc/react-query": "^11.0.0",
     "@trpc/server": "^11.0.0",
     "chart.js": "^4.5.0",
+    "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.41.0",
+    "lucia": "^3.2.2",
     "lucide-react": "^0.535.0",
     "next": "^15.2.3",
     "postgres": "^3.4.4",
@@ -36,10 +41,12 @@
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.0.0",
     "react-gaugejs": "^2.0.3",
+    "react-hook-form": "^7.62.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.7.1",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
+    "tailwind-merge": "^3.3.1",
     "zod": "^3.24.2"
   },
   "devDependencies": {
